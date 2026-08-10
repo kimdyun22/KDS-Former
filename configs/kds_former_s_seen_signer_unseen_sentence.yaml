@@ -1,0 +1,35 @@
+name: KDS-Former-S
+protocol: seen-signer / unseen-sentence
+manifest_pattern: manifests/seen_signer_unseen_sentence_seed{seed}.json
+seeds: [42, 43, 2024]
+
+model:
+  d_hand: 128
+  d_body: 128
+  d_fusion: 256
+  nhead: 8
+  branch_layers: 2
+  fusion_layers: 2
+  dim_feedforward: 512
+  mouth_only: false
+  face_mode: full
+  classifier: linear
+  norm_scale: 32.0
+  dropout: 0.1
+
+training:
+  optimizer: AdamW
+  epochs: 60
+  batch_size: 12
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  patience: 20
+  max_frames: 300
+  seeds: [42, 43, 2024]
+  gradient_clip_norm: 5.0
+  warmup_epochs: 0
+  amp: false
+
+selection:
+  metric: validation WER
+  test_based_selection: forbidden

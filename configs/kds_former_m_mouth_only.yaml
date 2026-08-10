@@ -1,0 +1,37 @@
+name: KDS-Former-M
+definition: Medium-width KDS-Former with mouth-only facial input
+manifest_patterns:
+  seen-signer / unseen-sentence: manifests/seen_signer_unseen_sentence_seed{seed}.json
+  unseen-signer / unseen-sentence: manifests/unseen_signer_unseen_sentence_seed{seed}.json
+seeds: [42, 43, 2024]
+
+model:
+  d_hand: 256
+  d_body: 256
+  d_fusion: 512
+  nhead: 8
+  branch_layers: 3
+  fusion_layers: 3
+  dim_feedforward: 1024
+  mouth_only: true
+  face_mode: mouth_only
+  classifier: linear
+  norm_scale: 32.0
+  dropout: 0.1
+
+training:
+  optimizer: AdamW
+  epochs: 60
+  batch_size: 12
+  learning_rate: 0.00005
+  weight_decay: 0.0001
+  patience: 20
+  max_frames: 300
+  seeds: [42, 43, 2024]
+  gradient_clip_norm: 5.0
+  warmup_epochs: 5
+  amp: false
+
+selection:
+  metric: validation WER
+  test_based_selection: forbidden

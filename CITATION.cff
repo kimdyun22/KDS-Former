@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: KDS-Former
+message: If you use this code or the released split manifests, please cite the associated KDS-Former manuscript.
+authors:
+  - family-names: Kim
+    given-names: Dohyeon
+  - family-names: Kang
+    given-names: Hyunsoo
+repository-code: https://github.com/kimdyun22/KDS-Former
+license: MIT
+date-released: 2026-08-09
