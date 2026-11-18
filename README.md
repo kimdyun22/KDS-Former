@@ -94,9 +94,9 @@ python training/train_ksl_manifest.py \
   --manifest manifests/seen_signer_unseen_sentence_seed42.json \
   --protocol k1 \
   --seed 42 \
-  --epochs 60 \
+  --epochs 100 \
   --batch-size 12 \
-  --lr 1e-4 \
+  --lr 3e-4 \
   --weight-decay 1e-4 \
   --max-frames 300 \
   --d-hand 128 \
@@ -106,8 +106,7 @@ python training/train_ksl_manifest.py \
   --branch-layers 2 \
   --fusion-layers 2 \
   --dim-feedforward 512 \
-  --run-suffix _kds_former_s \
-  --no-amp
+  --run-suffix _kds_former_s
 ```
 
 This writes checkpoints under `checkpoints/k1_seed42_kds_former_s/`.
@@ -119,7 +118,7 @@ python training/train_ksl_manifest.py \
   --manifest manifests/seen_signer_unseen_sentence_seed42.json \
   --protocol k1 \
   --seed 42 \
-  --epochs 60 \
+  --epochs 100 \
   --batch-size 12 \
   --lr 5e-5 \
   --weight-decay 1e-4 \
@@ -134,6 +133,7 @@ python training/train_ksl_manifest.py \
   --face-mode mouth_only \
   --warmup-epochs 5 \
   --run-suffix _kds_former_m_mouth_only \
+  --skip-nonfinite-gradients \
   --no-amp
 ```
 

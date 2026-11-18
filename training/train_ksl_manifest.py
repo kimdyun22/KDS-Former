@@ -79,11 +79,13 @@ def run_epoch(
             if scaler.is_enabled():
                 scaler.unscale_(optimizer)
             grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=5.0, error_if_nonfinite=False)
-            if not torch.isfinite(grad_norm):
+            # With AMP enabled, GradScaler handles overflow: step() skips the update when
+            # inf/NaN gradients are found and update() lowers the loss scale. This matches the
+            # KDS-Former-S runs reported in the paper. The explicit non-finite check below
+            # applies only to full-precision training (e.g. KDS-Former-M).
+            if not scaler.is_enabled() and not torch.isfinite(grad_norm):
                 skipped += 1
                 optimizer.zero_grad(set_to_none=True)
-                if scaler.is_enabled():
-                    scaler.update()
                 print(
                     f"[skip] non-finite KDS gradient epoch={epoch} batch={batch_idx} "
                     f"grad_norm={float(grad_norm)} skipped={skipped}/{max_skipped_batches}",
